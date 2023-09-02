@@ -1,0 +1,40 @@
+name: 'Kemocade VRC World Tracker Action'
+description: 'GitHub Action for automatically tracking World information from the VRChat API'
+branding:
+  icon: globe
+  color: green
+inputs:
+  workspace:
+    description: 'The workspace directory.'
+    default: '/github/workspace'
+  output:
+    description: 'The directory to write output inside of (relative to workspace). Example, "path/to/output".'
+    required: true
+  username:
+    description: 'VRChat Username'
+    required: true
+  password:
+    description: 'VRChat Password'
+    required: true
+  key:
+    description: 'VRChat 2FA secret key'
+    required: true
+  worlds:
+    description: 'VRChat World ID(s) to track (if more than one, use a comma-delimited string)'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+  - '-W'
+  - ${{ inputs.workspace }}
+  - '-O'
+  - ${{ inputs.output }}
+  - '-u'
+  - ${{ inputs.username }}
+  - '-p'
+  - ${{ inputs.password }}
+  - '-k'
+  - ${{ inputs.key }}
+  - '-w'
+  - ${{ inputs.worlds }}
